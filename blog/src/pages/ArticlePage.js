@@ -7,4 +7,4 @@ const ArticlePage = () => (
     </>
 )
 
-export default HomePage;
+export default ArticlePage;
