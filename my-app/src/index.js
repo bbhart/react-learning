@@ -1,26 +1,34 @@
-import React, { useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function Checkbox() {
+function FetchQuote() {
 
-  const [checked, toggle] = useReducer(
-    checked => !checked,
-    false
-  );
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    fetch(`https://h7bcs4ozaa.execute-api.us-east-1.amazonaws.com/prod`)
+      .then(res => res.json())
+      .then(setData)
+      .catch(console.error)
+  }, []);
 
-  return (
-    <>
-
-      <input type="checkbox" value={checked} onChange={toggle}/>
-      {checked ? "Checked" : "Not checked"}
+  if(data) {
+    return <div>{data.body.quote}</div>;
     
-    
-    </>
-  );
+  }
+
+  return null;
+
 }
 
+function App() {
+  return (
+  <FetchQuote />
+  );
+}  
+
 ReactDOM.render(
-  <Checkbox />,
+  <App />,
   document.getElementById("root")
 );
