@@ -1,11 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import articleContent from '../article-content';
+import ArticlesList from '../components/ArticlesList';
 
 const ArticlePage = ({ match }) => {
     const { name } = useParams();
     const article = articleContent.find(article => article.name === name);
 
+    // Get the articles that aren't this one
+    const otherArticles = articleContent.filter(article => article.name !== name);
 
     return (
         <>
@@ -13,6 +16,9 @@ const ArticlePage = ({ match }) => {
         {article.content.map((paragraph, key) => (
             <p key={key}>{paragraph}</p>
         ))}
+
+        <h3>Other Articles:</h3>
+        <ArticlesList articles={otherArticles} />
     
         </>
     );
